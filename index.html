@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cape Cod Birthday Lighthouse Trip</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1a2744;
+    --deep: #0d1829;
+    --ocean: #2e5c8a;
+    --mist: #7ba7bc;
+    --sand: #e8dcc8;
+    --cream: #f5f0e8;
+    --warm: #c8a96e;
+    --rust: #b5542a;
+    --rose: #c9566a;
+    --blush: #fce8ec;
+    --white: #fdfaf5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    font-family: 'Jost', sans-serif;
+    color: var(--navy);
+    font-weight: 300;
+  }
+
+  /* ── COVER ── */
+  .cover {
+    min-height: 100vh;
+    background: var(--deep);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 60px 40px;
+    text-align: center;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 45%;
+    background: linear-gradient(180deg, transparent 0%, rgba(46,92,138,0.25) 60%, rgba(46,92,138,0.45) 100%);
+    pointer-events: none;
+  }
+
+  .wave-svg { position: absolute; bottom: 0; left: 0; right: 0; opacity: 0.18; }
+
+  .stars {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image:
+      radial-gradient(1px 1px at 15% 12%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 72% 8%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 38% 22%, rgba(255,255,255,0.8) 0%, transparent 100%),
+      radial-gradient(1px 1px at 85% 18%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(1px 1px at 55% 5%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 28% 35%, rgba(255,255,255,0.4) 0%, transparent 100%),
+      radial-gradient(1.5px 1.5px at 91% 30%, rgba(255,255,255,0.7) 0%, transparent 100%),
+      radial-gradient(1px 1px at 8% 42%, rgba(255,255,255,0.5) 0%, transparent 100%),
+      radial-gradient(1px 1px at 62% 28%, rgba(255,255,255,0.6) 0%, transparent 100%),
+      radial-gradient(2px 2px at 45% 15%, rgba(200,169,110,0.9) 0%, transparent 100%);
+    pointer-events: none;
+  }
+
+  .confetti { position: absolute; top: 0; left: 0; right: 0; bottom: 0; pointer-events: none; overflow: hidden; z-index: 1; }
+  .confetti span { position: absolute; width: 6px; height: 6px; border-radius: 1px; opacity: 0; animation: fall linear infinite; }
+  @keyframes fall {
+    0% { transform: translateY(-20px) rotate(0deg); opacity: 0.8; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+  }
+
+  .bday-badge {
+    position: absolute; top: 36px; right: 36px; z-index: 10;
+    width: 90px; height: 90px; background: var(--rose); border-radius: 50%;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 2px solid rgba(255,255,255,0.3);
+    box-shadow: 0 4px 20px rgba(201,86,106,0.5);
+    animation: spin-slow 12s linear infinite; text-align: center;
+  }
+  @keyframes spin-slow { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+  .bday-badge-inner { animation: spin-slow-reverse 12s linear infinite; display: flex; flex-direction: column; align-items: center; }
+  @keyframes spin-slow-reverse { 0% { transform: rotate(0deg); } 100% { transform: rotate(-360deg); } }
+  .bday-badge .badge-emoji { font-size: 1.4rem; }
+  .bday-badge .badge-text { font-size: 0.5rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.9); margin-top: 3px; font-weight: 600; line-height: 1.3; }
+
+  .lighthouse-icon { position: relative; z-index: 2; margin-bottom: 40px; animation: glow-pulse 3s ease-in-out infinite; }
+  @keyframes glow-pulse {
+    0%, 100% { filter: drop-shadow(0 0 12px rgba(200,169,110,0.4)); }
+    50% { filter: drop-shadow(0 0 28px rgba(200,169,110,0.8)); }
+  }
+
+  .bday-banner {
+    position: relative; z-index: 2;
+    display: inline-flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, rgba(201,86,106,0.25), rgba(200,169,110,0.25));
+    border: 1px solid rgba(200,169,110,0.5); border-radius: 40px;
+    padding: 10px 28px; margin-bottom: 28px;
+    font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 500;
+    color: #f5deb3; animation: shimmer 3s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0%, 100% { border-color: rgba(200,169,110,0.4); box-shadow: 0 0 0 rgba(200,169,110,0); }
+    50% { border-color: rgba(200,169,110,0.9); box-shadow: 0 0 18px rgba(200,169,110,0.25); }
+  }
+
+  .cover-eyebrow { position: relative; z-index: 2; font-size: 0.7rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--warm); margin-bottom: 20px; }
+  .cover-title { position: relative; z-index: 2; font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 8vw, 6rem); font-weight: 300; color: var(--white); line-height: 1.05; margin-bottom: 16px; }
+  .cover-title em { font-style: italic; color: var(--warm); }
+  .cover-subtitle { position: relative; z-index: 2; font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 300; font-style: italic; color: var(--mist); margin-bottom: 50px; max-width: 520px; }
+
+  .cover-dates { position: relative; z-index: 2; display: flex; gap: 50px; align-items: center; flex-wrap: wrap; justify-content: center; }
+  .date-pill { text-align: center; }
+  .date-pill .label { font-size: 0.65rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mist); margin-bottom: 6px; }
+  .date-pill .value { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 400; color: var(--white); }
+  .divider-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--warm); opacity: 0.6; }
+
+  /* ── SHARED ── */
+  .rule { display: flex; align-items: center; gap: 16px; margin: 56px auto; max-width: 200px; }
+  .rule-line { flex: 1; height: 1px; background: var(--warm); opacity: 0.4; }
+  .rule-star { color: var(--warm); font-size: 0.8rem; opacity: 0.7; }
+
+  .section-label { font-size: 0.65rem; letter-spacing: 0.35em; text-transform: uppercase; color: var(--ocean); font-weight: 500; margin-bottom: 20px; display: block; }
+
+  /* ── INTRO ── */
+  .intro { max-width: 860px; margin: 0 auto; padding: 80px 40px 40px; text-align: center; }
+  .intro-heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; line-height: 1.2; color: var(--navy); margin-bottom: 28px; }
+  .intro-text { font-size: 1.05rem; line-height: 1.85; color: #3a4a60; max-width: 680px; margin: 0 auto; }
+
+  .bday-highlight-card {
+    background: linear-gradient(135deg, rgba(201,86,106,0.1), rgba(200,169,110,0.1));
+    border: 1.5px solid rgba(201,86,106,0.3); border-radius: 12px;
+    padding: 24px 32px; margin: 28px auto 0; max-width: 680px; text-align: center;
+  }
+  .bday-highlight-card p { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-style: italic; color: var(--rose); line-height: 1.6; }
+
+  /* ── LOGISTICS ── */
+  .logistics { background: var(--navy); color: var(--white); padding: 48px 40px; margin: 60px 0 0; }
+  .logistics-inner { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 40px; }
+  .logistic-item { text-align: center; }
+  .logistic-icon { font-size: 1.8rem; margin-bottom: 10px; display: block; }
+  .logistic-label { font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--mist); margin-bottom: 6px; }
+  .logistic-value { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; color: var(--white); }
+  .logistic-note { font-size: 0.75rem; color: var(--mist); margin-top: 4px; opacity: 0.8; }
+
+  /* ── ITINERARY ── */
+  .itinerary { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
+  .itinerary-header { text-align: center; margin-bottom: 60px; }
+  .itinerary-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 300; color: var(--navy); }
+  .itinerary-title span { color: var(--ocean); font-style: italic; }
+
+  /* ── STOP CARD (photo layout) ── */
+  .stop-card {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    min-height: 280px;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 40px;
+    box-shadow: 0 6px 30px rgba(26,39,68,0.12);
+  }
+
+  .stop-card:nth-child(even) {
+    grid-template-columns: 1fr 340px;
+  }
+
+  .stop-photo {
+    position: relative;
+    overflow: hidden;
+    min-height: 260px;
+  }
+
+  .stop-card:nth-child(even) .stop-photo { order: 2; }
+  .stop-card:nth-child(even) .stop-body  { order: 1; }
+
+  .stop-photo img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+  .stop-card:hover .stop-photo img { transform: scale(1.04); }
+
+  .stop-num-overlay {
+    position: absolute; top: 20px; left: 20px; z-index: 3;
+    width: 52px; height: 52px; border-radius: 50%;
+    background: var(--navy); border: 2.5px solid var(--warm);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .stop-card:nth-child(even) .stop-num-overlay { left: auto; right: 20px; }
+  .stop-num-n { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--warm); line-height: 1; }
+  .stop-num-t { font-size: 0.45rem; letter-spacing: 0.1em; color: var(--mist); text-transform: uppercase; }
+
+  .stop-maps-overlay {
+    position: absolute; bottom: 16px; left: 16px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 7px;
+    background: rgba(13,24,41,0.82); backdrop-filter: blur(6px);
+    border: 1px solid rgba(200,169,110,0.4);
+    border-radius: 30px; padding: 7px 14px;
+    text-decoration: none; color: var(--warm);
+    font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 500;
+    transition: background 0.2s, border-color 0.2s;
+  }
+  .stop-card:nth-child(even) .stop-maps-overlay { left: auto; right: 16px; }
+  .stop-maps-overlay:hover { background: rgba(46,92,138,0.85); border-color: var(--mist); color: white; }
+
+  .stop-body {
+    background: var(--white);
+    padding: 36px 36px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .stop-time-chip {
+    font-size: 0.62rem; letter-spacing: 0.28em; text-transform: uppercase;
+    color: var(--ocean); font-weight: 600; margin-bottom: 10px;
+  }
+
+  .stop-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.75rem; font-weight: 600; color: var(--navy); line-height: 1.15; margin-bottom: 4px;
+  }
+
+  .stop-location {
+    font-size: 0.68rem; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--rust); font-weight: 500; margin-bottom: 16px;
+  }
+
+  .stop-desc { font-size: 0.9rem; line-height: 1.78; color: #4a5a72; margin-bottom: 18px; }
+
+  .stop-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag {
+    font-size: 0.63rem; letter-spacing: 0.14em; text-transform: uppercase; font-weight: 500;
+    padding: 4px 12px; border-radius: 20px;
+    background: rgba(46,92,138,0.09); color: var(--ocean); border: 1px solid rgba(46,92,138,0.2);
+  }
+  .tag.hi { background: rgba(200,169,110,0.14); color: var(--rust); border-color: rgba(200,169,110,0.38); }
+
+  /* ── OVERNIGHT ── */
+  .overnight-section { max-width: 1100px; margin: 0 auto; padding: 0 40px 80px; }
+
+  .overnight-card {
+    background: var(--navy); border-radius: 16px; padding: 0; overflow: hidden;
+    box-shadow: 0 6px 30px rgba(26,39,68,0.18);
+  }
+
+  .overnight-header {
+    background: var(--rose); padding: 18px 36px;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .overnight-header-label { font-size: 0.68rem; letter-spacing: 0.32em; text-transform: uppercase; color: rgba(255,255,255,0.92); font-weight: 500; }
+
+  .overnight-body { display: grid; grid-template-columns: 1fr 1fr; }
+
+  .overnight-left { padding: 36px 36px; border-right: 1px solid rgba(255,255,255,0.1); }
+  .overnight-hotel { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 400; color: var(--white); margin-bottom: 14px; line-height: 1.2; }
+  .overnight-hotel a { color: var(--white); text-decoration: none; }
+  .overnight-hotel a:hover { color: var(--warm); }
+  .overnight-desc { font-size: 0.88rem; line-height: 1.78; color: var(--mist); margin-bottom: 22px; }
+  .maps-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(46,92,138,0.6); border: 1px solid rgba(123,167,188,0.35);
+    color: var(--white); text-decoration: none; border-radius: 30px;
+    padding: 9px 22px; font-size: 0.68rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
+    transition: background 0.2s;
+  }
+  .maps-btn:hover { background: rgba(46,92,138,1); }
+
+  .overnight-right { padding: 36px 36px; }
+  .det-item { margin-bottom: 20px; }
+  .det-label { font-size: 0.6rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--mist); opacity: 0.75; margin-bottom: 5px; }
+  .det-value { font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; color: var(--white); line-height: 1.4; }
+
+  /* ── TIPS ── */
+  .tips { background: var(--sand); padding: 70px 40px; }
+  .tips-inner { max-width: 1100px; margin: 0 auto; }
+  .tips-heading { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300; color: var(--navy); text-align: center; margin-bottom: 50px; }
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 28px; }
+  .tip-card { background: var(--white); border-radius: 12px; padding: 28px; border-top: 3px solid var(--warm); }
+  .tip-emoji { font-size: 1.6rem; margin-bottom: 12px; display: block; }
+  .tip-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--navy); margin-bottom: 10px; }
+  .tip-text { font-size: 0.86rem; line-height: 1.72; color: #5a6a7e; }
+
+  /* ── RETURN ── */
+  .return-section { background: var(--ocean); color: var(--white); padding: 64px 40px; text-align: center; }
+  .return-section h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.9rem; font-weight: 300; margin-bottom: 16px; }
+  .return-section p { font-size: 0.92rem; line-height: 1.82; color: rgba(255,255,255,0.82); max-width: 600px; margin: 0 auto 26px; }
+  .return-bonus { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); border-radius: 40px; padding: 12px 28px; font-size: 0.86rem; color: var(--white); }
+
+  /* ── FOOTER ── */
+  footer { background: var(--deep); color: var(--mist); text-align: center; padding: 32px 40px; font-size: 0.75rem; letter-spacing: 0.1em; opacity: 0.85; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 760px) {
+    .stop-card, .stop-card:nth-child(even) { grid-template-columns: 1fr; }
+    .stop-card:nth-child(even) .stop-photo { order: 1; }
+    .stop-card:nth-child(even) .stop-body { order: 2; }
+    .stop-card:nth-child(even) .stop-num-overlay { right: auto; left: 20px; }
+    .stop-card:nth-child(even) .stop-maps-overlay { right: auto; left: 16px; }
+    .stop-photo { min-height: 220px; }
+    .overnight-body { grid-template-columns: 1fr; }
+    .overnight-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.1); }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══ COVER ═══ -->
+<section class="cover">
+  <div class="stars"></div>
+  <div class="confetti">
+    <span style="left:5%;background:#e8b4b8;animation-duration:4.2s;animation-delay:0s;"></span>
+    <span style="left:15%;background:#c8a96e;animation-duration:3.8s;animation-delay:0.5s;border-radius:50%;"></span>
+    <span style="left:25%;background:#7ba7bc;animation-duration:5.1s;animation-delay:1s;"></span>
+    <span style="left:38%;background:#c9566a;animation-duration:4.5s;animation-delay:0.2s;border-radius:50%;"></span>
+    <span style="left:52%;background:#e8b4b8;animation-duration:3.5s;animation-delay:1.5s;"></span>
+    <span style="left:65%;background:#c8a96e;animation-duration:4.8s;animation-delay:0.8s;border-radius:50%;"></span>
+    <span style="left:75%;background:#7ba7bc;animation-duration:3.9s;animation-delay:0.3s;"></span>
+    <span style="left:88%;background:#c9566a;animation-duration:5.3s;animation-delay:1.2s;border-radius:50%;"></span>
+    <span style="left:42%;background:#f5deb3;animation-duration:4.1s;animation-delay:2s;"></span>
+    <span style="left:92%;background:#e8b4b8;animation-duration:3.6s;animation-delay:0.7s;"></span>
+  </div>
+  <div class="bday-badge">
+    <div class="bday-badge-inner">
+      <span class="badge-emoji">🎂</span>
+      <span class="badge-text">Happy<br>Birthday!</span>
+    </div>
+  </div>
+  <div class="lighthouse-icon">
+    <svg width="80" height="130" viewBox="0 0 80 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 28 L5 65 L75 65 Z" fill="rgba(200,169,110,0.15)"/>
+      <path d="M40 28 L0 80 L15 80 Z" fill="rgba(200,169,110,0.08)"/>
+      <path d="M40 28 L80 80 L65 80 Z" fill="rgba(200,169,110,0.08)"/>
+      <rect x="27" y="55" width="26" height="70" rx="2" fill="#1a2744" stroke="rgba(200,169,110,0.6)" stroke-width="1.5"/>
+      <rect x="27" y="65" width="26" height="10" fill="rgba(200,169,110,0.25)"/>
+      <rect x="27" y="85" width="26" height="10" fill="rgba(200,169,110,0.25)"/>
+      <rect x="27" y="105" width="26" height="10" fill="rgba(200,169,110,0.25)"/>
+      <rect x="24" y="40" width="32" height="18" rx="2" fill="#2e5c8a" stroke="rgba(200,169,110,0.8)" stroke-width="1.5"/>
+      <circle cx="40" cy="49" r="7" fill="rgba(200,169,110,0.9)" filter="url(#glow)"/>
+      <defs><filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="4" result="blur"/><feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>
+      <polygon points="24,40 56,40 40,25" fill="#1a2744" stroke="rgba(200,169,110,0.8)" stroke-width="1.5"/>
+      <rect x="22" y="57" width="36" height="3" rx="1.5" fill="rgba(200,169,110,0.7)"/>
+      <rect x="34" y="100" width="12" height="18" rx="6 6 2 2" fill="rgba(200,169,110,0.2)" stroke="rgba(200,169,110,0.5)" stroke-width="1"/>
+      <ellipse cx="40" cy="127" rx="32" ry="5" fill="rgba(46,92,138,0.4)"/>
+    </svg>
+  </div>
+  <div class="bday-banner">🎂 A Birthday Celebration Getaway 🎂</div>
+  <p class="cover-eyebrow">A Family Weekend Adventure</p>
+  <h1 class="cover-title">Cape Cod<br><em>Lighthouse Trail</em></h1>
+  <p class="cover-subtitle">Four iconic beacons, one unforgettable birthday Saturday on the tip of New England</p>
+  <div class="cover-dates">
+    <div class="date-pill"><div class="label">Depart</div><div class="value">Friday Evening</div></div>
+    <div class="divider-dot"></div>
+    <div class="date-pill"><div class="label">Birthday Day</div><div class="value">All Day Saturday</div></div>
+    <div class="divider-dot"></div>
+    <div class="date-pill"><div class="label">Return</div><div class="value">Sunday Evening</div></div>
+  </div>
+  <svg class="wave-svg" viewBox="0 0 1440 120" preserveAspectRatio="none" height="120">
+    <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="#2e5c8a"/>
+  </svg>
+</section>
+
+<!-- ═══ TRIP IMAGE ═══ -->
+<div style="width:100%;max-height:520px;overflow:hidden;line-height:0;">
+  <img src="https://whereaboutsshop.com/cdn/shop/products/ScreenShot2020-09-13at6.24.21PM_1296x_743e360c-3808-42dd-aaaa-bc1dda99a5fe_1800x1800.png?v=1643293406" alt="Cape Cod" style="width:100%;max-height:520px;object-fit:cover;display:block;">
+</div>
+
+<!-- ═══ INTRO ═══ -->
+<section class="intro">
+  <span class="section-label">The Adventure</span>
+  <h2 class="intro-heading">A birthday worth<br>chasing the light for</h2>
+  <p class="intro-text">Cape Cod is one of the most beloved stretches of coastline in America — a curling arm of sand and sea reaching into the Atlantic. It's home to some of the most beautiful lighthouses on the East Coast, each one with its own personality and perch above the waves. This weekend, we follow the Cape from its elbow all the way to the very tip, ending at the edge of the country as the sun sets over Race Point.</p>
+  <div class="bday-highlight-card">
+    <p>🎂 &nbsp; Here's to celebrating a very special birthday on the open road — Atlantic breeze, four incredible lighthouses, and the whole family together. &nbsp; 🎂</p>
+  </div>
+  <div class="rule"><div class="rule-line"></div><div class="rule-star">✦</div><div class="rule-line"></div></div>
+</section>
+
+<!-- ═══ LOGISTICS ═══ -->
+<div class="logistics">
+  <div class="logistics-inner">
+    <div class="logistic-item"><span class="logistic-icon">🚗</span><div class="logistic-label">Drive from Silver Spring</div><div class="logistic-value">~7.5 Hours</div><div class="logistic-note">I-95 N → Route 3 South</div></div>
+    <div class="logistic-item"><span class="logistic-icon">🏨</span><div class="logistic-label">Home Base</div><div class="logistic-value">Hyannis, MA</div><div class="logistic-note">Mid-Cape — perfect hub</div></div>
+    <div class="logistic-item"><span class="logistic-icon">🗺️</span><div class="logistic-label">Route Direction</div><div class="logistic-value">South → North</div><div class="logistic-note">Chatham up to Provincetown</div></div>
+    <div class="logistic-item"><span class="logistic-icon">🏛️</span><div class="logistic-label">Lighthouses</div><div class="logistic-value">4 Stops</div><div class="logistic-note">Each one unique</div></div>
+    <div class="logistic-item"><span class="logistic-icon">🎂</span><div class="logistic-label">Special Occasion</div><div class="logistic-value">Birthday Weekend!</div><div class="logistic-note">The best kind of trip</div></div>
+  </div>
+</div>
+
+<!-- ═══ ITINERARY ═══ -->
+<section class="itinerary">
+  <div class="itinerary-header">
+    <span class="section-label">Saturday Schedule</span>
+    <h2 class="itinerary-title">The <span>Lighthouse Loop</span></h2>
+  </div>
+
+  <!-- STOP 1: Chatham -->
+  <div class="stop-card">
+    <div class="stop-photo">
+      <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZNMIxn-93meEk_CJ-LTKA_DlKHmkAVljMP2w__SlZdEHd8shU4fItmrnQUCi79QeAtiF5uE8Jm6LsNP90m-E1FjCJZGmvsO6JdFbk8XZqejAbd4OINl1dPAFV436ilFWBrHFQa2iB-ZHsNOzw=s800-w800-h600" alt="Chatham Lighthouse" loading="lazy">
+      <div class="stop-num-overlay"><div class="stop-num-n">1</div></div>
+      <a href="https://maps.google.com/?cid=16214565605161723844" target="_blank" class="stop-maps-overlay">📍 Google Maps</a>
+    </div>
+    <div class="stop-body">
+      <div class="stop-time-chip">Stop 1 ·Visit Time ~45 min</div>
+      <div class="stop-name">Chatham Lighthouse</div>
+      <div class="stop-location">Chatham · The Elbow of the Cape</div>
+      <p class="stop-desc">Our first beacon marks the dramatic "elbow" where Cape Cod bends north. The lighthouse crowns a bluff above Chatham Harbor, looking out over ever-shifting sandbars that wrecked hundreds of ships over the centuries. The grounds are open and free, the view is stunning, and the charming village of Chatham is steps away — perfect for grabbing coffee and breakfast before heading north.</p>
+      <div class="stop-tags">
+        <span class="tag">Free to Visit</span>
+        <span class="tag">Scenic Harbor Views</span>
+        <span class="tag">Walkable Village</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOP 2: Nauset -->
+  <div class="stop-card">
+    <div class="stop-photo">
+      <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAHj5tFaI4YnfxKjg5L2-7uILhNvWtnNovsHwoV8-h1bJdXCO_Wbb_s9fM59P3SxoCWL1LETSmbV2ftQkif-Ss2oDWU3Dzl6EMJO0yuhdwmiMh54avosENn45WUUwdDyeL7feJohsw=w408-h544-k-no" alt="Nauset Lighthouse" loading="lazy">
+      <div class="stop-num-overlay"><div class="stop-num-n">2</div></div>
+      <a href="https://maps.google.com/?cid=13788922515839201481" target="_blank" class="stop-maps-overlay">📍 Google Maps</a>
+    </div>
+    <div class="stop-body">
+      <div class="stop-time-chip">Stop 2 ·Visit Time ~1 hour</div>
+      <div class="stop-name">Nauset Lighthouse</div>
+      <div class="stop-location">Eastham · Cape Cod National Seashore</div>
+      <p class="stop-desc">You've seen this lighthouse before — it's the iconic red-and-white tower on every bag of Cape Cod Potato Chips! Volunteer guides bring the history to life inside. The light sits beautifully above Nauset Light Beach, one of the Cape's most photographed shores. Look for seals playing in the surf below. No admission fee; donations welcome.</p>
+      <div class="stop-tags">
+        <span class="tag">Free Entry</span>
+        <span class="tag hi">🌟 Iconic Photo Spot</span>
+        <span class="tag">Beach Access</span>
+        <span class="tag">Volunteer Tours</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOP 3: Highland -->
+  <div class="stop-card">
+    <div class="stop-photo">
+      <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZPxKNZ5qwR3LK-IK39F3RqDH6ZXmZ4tyFMjPBcD0xASMx-UYAL4FRVH6iow5iZ5LRzbVFQr92DfyFpBL4KvQ6GYMwqfKUZKAu_4yP34CHZPU9TNbOAGr6X9EdnLaeHoIqmUjXmC5hRfsfH-1MY=s800-w800-h600" alt="Highland Lighthouse" loading="lazy">
+      <div class="stop-num-overlay"><div class="stop-num-n">3</div></div>
+      <a href="https://maps.google.com/?cid=2813130835123491089" target="_blank" class="stop-maps-overlay">📍 Google Maps</a>
+    </div>
+    <div class="stop-body">
+      <div class="stop-time-chip">Stop 3 ·Visit Time ~1.25 hours</div>
+      <div class="stop-name">Highland Lighthouse</div>
+      <div class="stop-location">Truro · Perched 120 Feet Above the Atlantic</div>
+      <p class="stop-desc">The oldest and tallest lighthouse on Cape Cod sits on a dramatic bluff with the Atlantic stretching endlessly in every direction. At $8 per adult, the guided climb to the top is an absolute highlight — the views from the lantern room are extraordinary. It uniquely shares its grounds with a functioning golf course, a purely Cape Cod quirk.</p>
+      <div class="stop-tags">
+        <span class="tag">$8 to Climb</span>
+        <span class="tag hi">🌟 Best Views on the Cape</span>
+        <span class="tag">Guided Tour</span>
+        <span class="tag">Open 9am–5pm</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOP 4: Race Point -->
+  <div class="stop-card">
+    <div class="stop-photo">
+      <img src="https://lh3.googleusercontent.com/place-photos/AJRVUZPNd5M1dXGfOKb2KVh6UVuxg2oxDuVMiGWY0cqv-f7Jn29X3bkXjFY9H5NBhbhWUEBzrD_U0_eqMOrMndWkYM4BXUMrvzKvXcAazcQ1j07IM8OFmOEmmeCdA975SJWsOF9AwTUFProxAs4E6Q=s800-w800-h600" alt="Race Point Lighthouse" loading="lazy">
+      <div class="stop-num-overlay"><div class="stop-num-n">4</div></div>
+      <a href="https://maps.google.com/?cid=3305654500361177002" target="_blank" class="stop-maps-overlay">📍 Google Maps</a>
+    </div>
+    <div class="stop-body">
+      <div class="stop-time-chip">Stop 4 ·Visit Time ~1.5 hours</div>
+      <div class="stop-name">Race Point Lighthouse</div>
+      <div class="stop-location">Provincetown · The Outermost Point of Cape Cod</div>
+      <p class="stop-desc">The grand finale. Race Point sits at the very tip of Cape Cod, where the National Seashore feels wild and utterly untouched. The lighthouse requires a beautiful 1.5-mile walk through rolling sand dunes — a genuine adventure. Gray seals often haul out on the beach nearby, and the golden afternoon light across the dunes is absolutely breathtaking.</p>
+      <div class="stop-tags">
+        <span class="tag">1.5-Mile Dune Walk</span>
+        <span class="tag hi">🦭 Watch for Seals!</span>
+        <span class="tag">National Seashore</span>
+        <span class="tag hi">🌅 Golden Hour Magic</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ OVERNIGHT ═══ -->
+<section class="overnight-section">
+  <div class="overnight-card">
+    <div class="overnight-header">
+      <span style="font-size:1.4rem;">🎂</span>
+      <span class="overnight-header-label">Saturday Night — Birthday Dinner &amp; Stay</span>
+    </div>
+    <div class="overnight-body">
+      <div class="overnight-left">
+        <div class="overnight-hotel">
+          <a href="https://www.google.com/maps/search/Comfort+Inn+Hyannis+1470+Route+132+Hyannis+MA" target="_blank">Comfort Inn Hyannis</a>
+        </div>
+        <p class="overnight-desc">Your mid-Cape home base, perfectly positioned for the whole lighthouse loop. Hyannis is the heartbeat of Cape Cod — a walkable downtown with great restaurants, waterfront dining, and ferries to Nantucket. After a full lighthouse day, it's the perfect launchpad for a proper birthday dinner by the harbor.</p>
+        <a href="https://www.google.com/maps/search/Comfort+Inn+Hyannis+1470+Route+132+Hyannis+MA" target="_blank" class="maps-btn">📍 &nbsp; Open in Google Maps</a>
+      </div>
+      <div class="overnight-right">
+        <div class="det-item"><div class="det-label">Address</div><div class="det-value">1470 Route 132, Hyannis, MA 02601</div></div>
+        <div class="det-item"><div class="det-label">Amenities</div><div class="det-value">Free Breakfast · Pool · Family Rooms</div></div>
+        <div class="det-item">
+          <div class="det-label">🎉 Birthday Dinner</div>
+          <div class="det-value"><a href="https://www.google.com/maps/search/Restaurants/@41.663449,-70.4013441,11.37z/data=!4m8!2m7!3m5!2sRace+Point+Lighthouse!3s0x89fca07fab6615af:0x2de00b41043307aa!4m2!1d-70.2430293!2d42.0623062!6e5?entry=ttu&g_ep=EgoyMDI2MDUxNy4wIKXMDSoASAFQAw%3D%3D" target="_blank" style="color:var(--warm);text-decoration:none;">🗺️ Google Maps Restaurant Search</a></div>
+        </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ TIPS ═══ -->
+<section class="tips">
+  <div class="tips-inner">
+    <h2 class="tips-heading">Good to Know Before You Go</h2>
+    <div class="tips-grid">
+      <div class="tip-card"><span class="tip-emoji">⏰</span><div class="tip-title">Arrive Early at Highland</div><p class="tip-text">Tours can fill up by midday in season. Plan to arrive close to 12:30pm or reserve ahead at recreation.gov. Absolutely worth it.</p></div>
+      <div class="tip-card"><span class="tip-emoji">👟</span><div class="tip-title">Wear Good Shoes</div><p class="tip-text">Race Point is a 1.5-mile walk through deep sand dunes. Sneakers or trail runners work best. Skip the flip-flops for this one.</p></div>
+      <div class="tip-card"><span class="tip-emoji">🅿️</span><div class="tip-title">Parking Notes</div><p class="tip-text">Nauset Light Beach parking is $20/day in peak season — covers all Cape Cod National Seashore beaches that day. Worth every penny.</p></div>
+      <div class="tip-card"><span class="tip-emoji">🌅</span><div class="tip-title">Time Race Point Right</div><p class="tip-text">Arrive between 3–5pm when golden hour light hits the dunes and lighthouse perfectly. The most magical photos of the whole trip.</p></div>
+      <div class="tip-card"><span class="tip-emoji">📸</span><div class="tip-title">Photo Tips</div><p class="tip-text">Nauset faces east (gorgeous morning light). Highland has open ocean (best midday). Race Point faces northwest — pure magic at golden hour.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ RETURN ═══ -->
+<section class="return-section">
+  <h3>Sunday: The Drive Home</h3>
+  <p>Head out after the Comfort Inn's free breakfast and a slow Sunday morning in Hyannis. The drive back to Silver Spring takes about 7.5 hours via I-95 South. Consider a gorgeous pit stop in <strong>Newport, Rhode Island</strong> — Castle Hill Lighthouse and Beavertail Lighthouse are right off the highway and take just 20 minutes each. A perfect birthday weekend bookend.</p>
+  <div class="return-bonus">🎂 &nbsp; Bonus Stops: Castle Hill + Beavertail Lighthouses, Newport, RI &nbsp; 🎂</div>
+</section>
+
+<footer>🎂 Happy Birthday! &nbsp;·&nbsp; Cape Cod Lighthouse Road Trip &nbsp;·&nbsp; Silver Spring, MD → Hyannis, MA &nbsp;·&nbsp; A Family Birthday Weekend on the North Atlantic Coast</footer>
+
+</body>
+</html>
